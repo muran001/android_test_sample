@@ -26,9 +26,9 @@ dependencies:
     #    - echo y | android update sdk --no-ui --all --filter "addon-google_apis-google-19"
 test:
   pre:
-    #- echo n | android create avd --force -n circleci-android-21 -t android-21
-    #- emulator -avd circleci-android-21 -no-skin -no-audio -no-window:
-    - emulator -avd circleci-android22 -no-skin -no-audio -no-window:
+    - echo n | android create avd --force -n circleci-android-21 -t android-21
+    - emulator -avd circleci-android-21 -no-skin -no-audio -no-window:
+    #- emulator -avd circleci-android22 -no-skin -no-audio -no-window:
         background: true
         parallel: true
     - circle-android wait-for-boot
