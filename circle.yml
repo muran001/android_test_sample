@@ -8,7 +8,7 @@ machine:
   java:
     version: oraclejdk8
   environment:
-    JAVA_OPTS: "-Xmx2048m -XX:MaxPermSize=1024m"
+    JAVA_OPTS: "-Xmx2048m"
     ADB_INSTALL_TIMEOUT: 8
 
 dependencies:
@@ -26,13 +26,17 @@ dependencies:
     #    - echo y | android update sdk --no-ui --all --filter "addon-google_apis-google-19"
 test:
   pre:
-    - echo n | android create avd --force -n circleci-android-21 -t android-21
-    - emulator -avd circleci-android-21 -no-skin -no-audio -no-window:
-    #- emulator -avd circleci-android22 -no-skin -no-audio -no-window:
+    #- echo n | android create avd --force -n circleci-android-21 -t android-21
+    #- emulator -avd circleci-android-21 -no-skin -no-audio -no-window:
+    - emulator -avd circleci-android22 -no-skin -no-audio -no-window:
         background: true
         parallel: true
     - circle-android wait-for-boot
+    - sleep 5
     - fb-adb shell input keyevent 82
+    - sleep 5
+    - fb-adb shell input touchscreen swipe 370 735 371 735
+    - sleep 5
   override:
     - ./gradlew --stacktrace connectedAndroidTest -PdisablePreDex
   post:
